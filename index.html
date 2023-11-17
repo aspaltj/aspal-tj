@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/BatasAdministrasi_1.js"></script>
+        <script src="data/HierarkiJalan_2.js"></script>
+        <script src="data/JalurTransJakarta_3.js"></script>
+        <script src="data/Buffer500m_4.js"></script>
+        <script src="data/HalteTransJakarta_5.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-6.371612239259704,106.62279872342654],[-6.075104046031882,107.14092103932671]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_OpenStreetMap_0');
+        map.getPane('pane_OpenStreetMap_0').style.zIndex = 400;
+        var layer_OpenStreetMap_0 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OpenStreetMap_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OpenStreetMap_0;
+        map.addLayer(layer_OpenStreetMap_0);
+        function pop_BatasAdministrasi_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_BatasAdministrasi_1_0(feature) {
+            switch(String(feature.properties['NAMOBJ'])) {
+                case 'JAKARTA BARAT':
+                    return {
+                pane: 'pane_BatasAdministrasi_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,238,198,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'JAKARTA PUSAT':
+                    return {
+                pane: 'pane_BatasAdministrasi_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,209,198,0.7019607843137254)',
+                interactive: true,
+            }
+                    break;
+                case 'JAKARTA SELATAN':
+                    return {
+                pane: 'pane_BatasAdministrasi_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(197,255,237,0.7019607843137254)',
+                interactive: true,
+            }
+                    break;
+                case 'JAKARTA TIMUR':
+                    return {
+                pane: 'pane_BatasAdministrasi_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(236,198,255,0.7019607843137254)',
+                interactive: true,
+            }
+                    break;
+                case 'JAKARTA UTARA':
+                    return {
+                pane: 'pane_BatasAdministrasi_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(224,255,197,0.7137254901960784)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_BatasAdministrasi_1');
+        map.getPane('pane_BatasAdministrasi_1').style.zIndex = 401;
+        map.getPane('pane_BatasAdministrasi_1').style['mix-blend-mode'] = 'normal';
+        var layer_BatasAdministrasi_1 = new L.geoJson(json_BatasAdministrasi_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_BatasAdministrasi_1',
+            layerName: 'layer_BatasAdministrasi_1',
+            pane: 'pane_BatasAdministrasi_1',
+            onEachFeature: pop_BatasAdministrasi_1,
+            style: style_BatasAdministrasi_1_0,
+        });
+        bounds_group.addLayer(layer_BatasAdministrasi_1);
+        map.addLayer(layer_BatasAdministrasi_1);
+        function pop_HierarkiJalan_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FGSRJL'] !== null ? autolinker.link(feature.properties['FGSRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_HierarkiJalan_2_0(feature) {
+            switch(String(feature.properties['FGSRJL'])) {
+                case '1':
+                    return {
+                pane: 'pane_HierarkiJalan_2',
+                opacity: 1,
+                color: 'rgba(255,80,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case '2':
+                    return {
+                pane: 'pane_HierarkiJalan_2',
+                opacity: 1,
+                color: 'rgba(254,139,1,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case '3':
+                    return {
+                pane: 'pane_HierarkiJalan_2',
+                opacity: 1,
+                color: 'rgba(255,255,8,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_HierarkiJalan_2');
+        map.getPane('pane_HierarkiJalan_2').style.zIndex = 402;
+        map.getPane('pane_HierarkiJalan_2').style['mix-blend-mode'] = 'normal';
+        var layer_HierarkiJalan_2 = new L.geoJson(json_HierarkiJalan_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_HierarkiJalan_2',
+            layerName: 'layer_HierarkiJalan_2',
+            pane: 'pane_HierarkiJalan_2',
+            onEachFeature: pop_HierarkiJalan_2,
+            style: style_HierarkiJalan_2_0,
+        });
+        bounds_group.addLayer(layer_HierarkiJalan_2);
+        map.addLayer(layer_HierarkiJalan_2);
+        function pop_JalurTransJakarta_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">KORIDOR</th>\
+                        <td>' + (feature.properties['KORIDOR'] !== null ? autolinker.link(feature.properties['KORIDOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">JURUSAN</th>\
+                        <td>' + (feature.properties['JURUSAN'] !== null ? autolinker.link(feature.properties['JURUSAN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_JalurTransJakarta_3_0() {
+            return {
+                pane: 'pane_JalurTransJakarta_3',
+                opacity: 1,
+                color: 'rgba(21,57,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 9.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_JalurTransJakarta_3');
+        map.getPane('pane_JalurTransJakarta_3').style.zIndex = 403;
+        map.getPane('pane_JalurTransJakarta_3').style['mix-blend-mode'] = 'normal';
+        var layer_JalurTransJakarta_3 = new L.geoJson(json_JalurTransJakarta_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_JalurTransJakarta_3',
+            layerName: 'layer_JalurTransJakarta_3',
+            pane: 'pane_JalurTransJakarta_3',
+            onEachFeature: pop_JalurTransJakarta_3,
+            style: style_JalurTransJakarta_3_0,
+        });
+        bounds_group.addLayer(layer_JalurTransJakarta_3);
+        map.addLayer(layer_JalurTransJakarta_3);
+        function pop_Buffer500m_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Halte</th>\
+                        <td>' + (feature.properties['Halte'] !== null ? autolinker.link(feature.properties['Halte'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Koridor</th>\
+                        <td>' + (feature.properties['Koridor'] !== null ? autolinker.link(feature.properties['Koridor'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kecamatan</th>\
+                        <td>' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kelurahan</th>\
+                        <td>' + (feature.properties['Kelurahan'] !== null ? autolinker.link(feature.properties['Kelurahan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kota</th>\
+                        <td>' + (feature.properties['Kota'] !== null ? autolinker.link(feature.properties['Kota'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Buffer500m_4_0() {
+            return {
+                pane: 'pane_Buffer500m_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(246,241,242,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Buffer500m_4');
+        map.getPane('pane_Buffer500m_4').style.zIndex = 404;
+        map.getPane('pane_Buffer500m_4').style['mix-blend-mode'] = 'normal';
+        var layer_Buffer500m_4 = new L.geoJson(json_Buffer500m_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Buffer500m_4',
+            layerName: 'layer_Buffer500m_4',
+            pane: 'pane_Buffer500m_4',
+            onEachFeature: pop_Buffer500m_4,
+            style: style_Buffer500m_4_0,
+        });
+        bounds_group.addLayer(layer_Buffer500m_4);
+        map.addLayer(layer_Buffer500m_4);
+        function pop_HalteTransJakarta_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Halte</th>\
+                        <td>' + (feature.properties['Halte'] !== null ? autolinker.link(feature.properties['Halte'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Alamat</th>\
+                        <td>' + (feature.properties['Alamat'] !== null ? autolinker.link(feature.properties['Alamat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Koridor</th>\
+                        <td>' + (feature.properties['Koridor'] !== null ? autolinker.link(feature.properties['Koridor'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kecamatan</th>\
+                        <td>' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kelurahan</th>\
+                        <td>' + (feature.properties['Kelurahan'] !== null ? autolinker.link(feature.properties['Kelurahan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kota</th>\
+                        <td>' + (feature.properties['Kota'] !== null ? autolinker.link(feature.properties['Kota'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_HalteTransJakarta_5_0() {
+            return {
+                pane: 'pane_HalteTransJakarta_5',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(55,88,198,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_HalteTransJakarta_5');
+        map.getPane('pane_HalteTransJakarta_5').style.zIndex = 405;
+        map.getPane('pane_HalteTransJakarta_5').style['mix-blend-mode'] = 'normal';
+        var layer_HalteTransJakarta_5 = new L.geoJson(json_HalteTransJakarta_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_HalteTransJakarta_5',
+            layerName: 'layer_HalteTransJakarta_5',
+            pane: 'pane_HalteTransJakarta_5',
+            onEachFeature: pop_HalteTransJakarta_5,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_HalteTransJakarta_5_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_HalteTransJakarta_5);
+        map.addLayer(layer_HalteTransJakarta_5);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/HalteTransJakarta_5.png" /> Halte TransJakarta': layer_HalteTransJakarta_5,'<img src="legend/Buffer500m_4.png" /> Buffer 500 m': layer_Buffer500m_4,'<img src="legend/JalurTransJakarta_3.png" /> Jalur TransJakarta': layer_JalurTransJakarta_3,'Hierarki Jalan<br /><table><tr><td style="text-align: center;"><img src="legend/HierarkiJalan_2_Arteri0.png" /></td><td>Arteri</td></tr><tr><td style="text-align: center;"><img src="legend/HierarkiJalan_2_Kolektor1.png" /></td><td>Kolektor</td></tr><tr><td style="text-align: center;"><img src="legend/HierarkiJalan_2_Lokal2.png" /></td><td>Lokal</td></tr></table>': layer_HierarkiJalan_2,'Batas Administrasi<br /><table><tr><td style="text-align: center;"><img src="legend/BatasAdministrasi_1_JAKARTABARAT0.png" /></td><td>JAKARTA BARAT</td></tr><tr><td style="text-align: center;"><img src="legend/BatasAdministrasi_1_JAKARTAPUSAT1.png" /></td><td>JAKARTA PUSAT</td></tr><tr><td style="text-align: center;"><img src="legend/BatasAdministrasi_1_JAKARTASELATAN2.png" /></td><td>JAKARTA SELATAN</td></tr><tr><td style="text-align: center;"><img src="legend/BatasAdministrasi_1_JAKARTATIMUR3.png" /></td><td>JAKARTA TIMUR</td></tr><tr><td style="text-align: center;"><img src="legend/BatasAdministrasi_1_JAKARTAUTARA4.png" /></td><td>JAKARTA UTARA</td></tr></table>': layer_BatasAdministrasi_1,"OpenStreetMap": layer_OpenStreetMap_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
